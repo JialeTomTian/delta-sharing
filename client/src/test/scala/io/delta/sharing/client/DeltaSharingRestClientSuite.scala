@@ -26,6 +26,7 @@ import io.delta.sharing.client.model.{
   AddFile,
   AddFileForCDF,
   DeltaTableFiles,
+  EndStreamAction,
   Format,
   Metadata,
   Protocol,
@@ -1224,5 +1225,21 @@ class DeltaSharingRestClientSuite extends DeltaSharingIntegrationTest {
           client.close()
         }
     }
+  }
+
+
+
+  test("checkEndStreamAction detects error message and propages error"){
+    val endStreamActionWithError = JsonUtils.toJson(
+      EndStreamAction(
+        refreshToken = "",
+        nextPageToken = "",
+        minUrlExpirationTimestamp = 0,
+        errorMessage = "INTERNAL_ERROR: Something went wrong during streaming"
+      )
+    )
+
+    checkEndStreamAction(
+    )
   }
 }
